@@ -1,0 +1,13 @@
+description: "A CLI tool to set/bump the `version` key in pubspec.yaml."
+name: "pubspec_version"
+version: "0.3.2"
+dependencies: 
+  args: "^1.5.0"
+  pub_semver: "^1.4.2"
+  pubspec: "^0.1.0"
+dev_dependencies: 
+  test: "^1.0.0"
+environment: 
+  sdk: ">=2.0.0 <3.0.0"
+executables: 
+  pubspec-version: "pubspec-version"
