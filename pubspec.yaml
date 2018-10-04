@@ -1,7 +1,7 @@
 description: "A CLI tool to set/bump the `version` key in pubspec.yaml."
 name: "pubspec_version"
 author: Alexey Karapetov <karapetov@gmail.com>
-homegape: https://github.com/f3ath/pubspec-version
+homepage: https://github.com/f3ath/pubspec-version
 version: "0.0.1"
 dependencies: 
   args: "^1.5.0"
