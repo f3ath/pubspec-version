@@ -17,10 +17,7 @@ Defaults to the current directory.
 - `-c` also does `git commit . 'Release <version>'` and `git tag <version>`. Think of `npm version` for Dart.
 
 ### Output
-The tool prints the new version to stdout so it can be used later, e.g. in `git tag`.
-```bash
-git tag $(pubspec-version bump)
-```
+The tool prints the new version to stdout.
 
 ___
 \*almost. It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which is a bit different.
