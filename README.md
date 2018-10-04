@@ -1,5 +1,5 @@
 # pubspec-version
-A CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant*.
+A CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant\*.
 
 ## Usage
 ### Bumping the version
@@ -21,4 +21,4 @@ git tag $(pubspec-version bump)
 ```
 
 ___
-*almost. It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which it a bit different.
+\*almost. It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which is a bit different.
