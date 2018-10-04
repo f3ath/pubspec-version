@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:pubspec/pubspec.dart';
 import 'package:test/test.dart';
 
-import 'package:pubspec_version/app.dart';
+import 'package:pubspec_version/pubspec-version.dart';
 
 class MockStdOut extends Mock implements Stdout {}
 
