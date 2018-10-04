@@ -2,6 +2,6 @@ language: dart
 dart:
 - stable
 dart_task:
-- test
+- test: --platform vm
 - dartfmt: true
 - dartanalyzer: --fatal-infos --fatal-warnings lib test bin
