@@ -14,6 +14,10 @@ abstract class BaseCommand extends Command {
         abbr: 'd',
         help: 'Directory to look pubspec.yaml in. Default is the current dir.',
         defaultsTo: '.');
+    argParser.addFlag('commit',
+        abbr: 'c',
+        help:
+            'Runs `git commit . -m "Release <version>"` and `git tag <version>`');
   }
 
   Version next(Version current);
@@ -25,6 +29,9 @@ abstract class BaseCommand extends Command {
       final nextVersion = next(pubspec.version);
       await await pubspec.copy(version: nextVersion).save(dir);
       outputSink.writeln(nextVersion.toString());
+      await Process.run(
+          'git', ['commit', '.', '-m', 'Release ${nextVersion.toString()}']);
+      await Process.run('git', ['tag', nextVersion.toString()]);
     } on Error catch (e) {
       errorSink.writeln(e);
       exitCode = 2;

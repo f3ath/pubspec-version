@@ -12,7 +12,9 @@ E.g. if the current package version is `1.2.3`, running `pubspec-version bump mi
 Run `pubspec-version set <version>` to set the version to `<version>`.
 
 ### Options
-- `-c <path-to-pubspec>` provides the path to pubspec.yaml.
+- `-d <pubspec_directory>` provides the path to the directory containing `pubspec.yaml`. 
+Defaults to the current directory.
+- `-c` also does `git commit . 'Release <version>'` and `git tag <version>`. Think of `npm version` for Dart.
 
 ### Output
 The tool prints the new version to stdout so it can be used later, e.g. in `git tag`.
