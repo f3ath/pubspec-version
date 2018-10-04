@@ -26,9 +26,9 @@ abstract class BaseCommand extends Command {
   FutureOr run() async {
     try {
       final dir = Directory(argResults['pubspec-dir']);
-      final pubspec = await await PubSpec.load(dir);
+      final pubspec = await PubSpec.load(dir);
       final nextVersion = next(pubspec.version);
-      await await pubspec.copy(version: nextVersion).save(dir);
+      await pubspec.copy(version: nextVersion).save(dir);
       outputSink.writeln(nextVersion.toString());
       if (argResults['commit']) {
         await Process.run(
