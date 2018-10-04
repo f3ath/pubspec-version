@@ -1,4 +1,4 @@
-description: "A CLI tool to set/bump the `version` key in pubspec.yaml."
+description: "A CLI tool to set/bump the `version` key in pubspec.yaml. Think of `npm version` for Dart"
 name: "pubspec_version"
 author: Alexey Karapetov <karapetov@gmail.com>
 homepage: https://github.com/f3ath/pubspec-version
