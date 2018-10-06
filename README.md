@@ -3,13 +3,13 @@ A CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant\*.
 
 ## Usage
 ### Bumping the version
-Run `pubspec-version bump <part>` to increment the version. 
+Run `pub run pubspec_version:bump <part>` to increment the version. 
 `<part>` can be either `breaking`, `major`, `minor`, or `patch`.
 
-E.g. if the current package version is `1.2.3`, running `pubspec-version bump minor` will set it to `1.3.0`.
+E.g. if the current package version is `1.2.3`, running `pub run pubspec_version:bump minor` will set it to `1.3.0`.
 
 ### Setting the version
-Run `pubspec-version set <version>` to set the version to `<version>`.
+Run `pub run pubspec_version:set <version>` to set the version to `<version>`.
 
 ### Options
 - `-d <pubspec_directory>` provides the path to the directory containing `pubspec.yaml`. 
