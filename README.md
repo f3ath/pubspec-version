@@ -2,6 +2,7 @@
 A CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant\*.
 
 ## Usage
+The examples are given for the vm. Flutter users run `flutter packages pub run pubspec_version:<command> <param>`.
 ### Bumping the version
 Run `pub run pubspec_version:bump <part>` to increment the version. 
 `<part>` can be either `breaking`, `major`, `minor`, or `patch`.
@@ -18,6 +19,7 @@ Defaults to the current directory.
 
 ### Output
 The tool prints the new version to stdout.
+
 
 ___
 \*almost. It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which is a bit different.
