@@ -10,21 +10,18 @@ class MockConsole extends Mock implements Console {}
 void main() {
   Directory temp;
   MockConsole mockConsole;
-  Command setCommand;
-  Command bumpCommand;
+  App app;
 
   expectVersion(String v) async {
-    expect(verify(mockConsole.log(captureAny)).captured, [v]);
     expect((await PubSpec.load(Directory(temp.path))).version.toString(), v);
+    expect(verify(mockConsole.log(captureAny)).captured, [v]);
   }
 
   setUp(() async {
     temp = await Directory.systemTemp.createTemp();
     File('test/pubspec_sample.yaml').copy('${temp.path}/pubspec.yaml');
     mockConsole = MockConsole();
-
-    setCommand = Command(mockConsole, setVersion);
-    bumpCommand = Command(mockConsole, bumpVersion);
+    app = App(mockConsole);
   });
 
   tearDown(() async {
@@ -32,28 +29,39 @@ void main() {
   });
 
   test('bump breaking', () async {
-    await bumpCommand.run(['breaking', '-d', temp.path]);
+    final code = await app.run(['bump', 'breaking', '-d', temp.path]);
+    expect(code, 0);
     await expectVersion('0.4.0');
   });
 
   test('bump major', () async {
-    await bumpCommand.run(['major', '-d', temp.path]);
+    final code = await app.run(['bump', 'major', '-d', temp.path]);
+    expect(code, 0);
     await expectVersion('1.0.0');
   });
 
   test('bump minor', () async {
-    await bumpCommand.run(['minor', '-d', temp.path]);
+    final code = await app.run(['bump', 'minor', '-d', temp.path]);
+    expect(code, 0);
     await expectVersion('0.4.0');
   });
 
   test('bump patch', () async {
-    await bumpCommand.run(['patch', '-d', temp.path]);
+    final code = await app.run(['bump', 'patch', '-d', temp.path]);
+    expect(code, 0);
     await expectVersion('0.3.3');
   });
 
   test('set', () async {
-    final code = await setCommand.run(['5.4.321', '-d', temp.path]);
+    final code = await app.run(['set', '5.4.321', '-d', temp.path]);
     expect(code, 0);
     await expectVersion('5.4.321');
+  });
+
+  test('set called without version', () async {
+    final code = await app.run(['set']);
+    expect(code, 64);
+    expect(verify(mockConsole.error(captureAny)).captured,
+        ['Please provide the version\n\nExample: set 3.2.1']);
   });
 }

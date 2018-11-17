@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2018-11-16
+### Breaking change
+- This is now a standalone cli app.
+
 ## [0.1.0] - 2018-10-05
 ### Changed
 - Binary names

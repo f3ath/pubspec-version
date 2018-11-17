@@ -1,25 +1,44 @@
-# pubspec-version
-A CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant\*.
+# pubver
+CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant\*.
 
+## Installing
+You can install the package from the command line:
+```
+pub global activate pubspec_version
+```
+
+This will add the **pubver** binary to your `~/.pub-cache/bin`.
 ## Usage
-The examples are given for the vm. Flutter users run `flutter packages pub run pubspec_version:<command> <param>`.
 ### Bumping the version
-Run `pub run pubspec_version:bump <part>` to increment the version. 
-`<part>` can be either `breaking`, `major`, `minor`, or `patch`.
+```
+pubver bump <part>
+``` 
+where `<part>` can be either:
+ - `breaking`
+ - `major`
+ - `minor`
+ - `patch`
 
-E.g. if the current package version is `1.2.3`, running `pub run pubspec_version:bump minor` will set it to `1.3.0`.
+#### Examples
+Before | Command | After
+--- | --- | ---
+1.2.3 | `pubver bump breaking`  | 2.0.0
+0.2.1 | `pubver bump breaking`  | 0.3.0
+0.2.1 | `pubver bump major`     | 1.0.0
+0.2.1 | `pubver bump minor`     | 0.3.0
+0.2.1 | `pubver bump patch`     | 0.2.1
 
 ### Setting the version
-Run `pub run pubspec_version:set <version>` to set the version to `<version>`.
-
-### Options
-- `-d <pubspec_directory>` provides the path to the directory containing `pubspec.yaml`. 
-Defaults to the current directory.
-- `-c` also does `git commit . 'Release <version>'` and `git tag <version>`. Think of `npm version` for Dart.
+```
+pubver set <version>
+```
+where `<version>` can be any arbitrary version.
 
 ### Output
-The tool prints the new version to stdout.
-
+The tool prints the new version to stdout. This allows post processing, e.g. making a git commit.
+```bash
+git ci . -m "Release $(pubver bump breaking)"
+```
 
 ___
 \*almost. It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which is a bit different.

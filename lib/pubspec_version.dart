@@ -1,78 +1,102 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:args/args.dart';
+import 'package:args/command_runner.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec/pubspec.dart';
+
+class App {
+  final Console console;
+
+  App(this.console);
+
+  Future<int> run(List<String> args) async {
+    final bumpers = [
+      Bumper('breaking', 'Bumps the version to the next breaking.', console),
+      Bumper('major', 'Bumps the major version.', console),
+      Bumper('minor', 'Bumps the minor version.', console),
+      Bumper('patch', 'Bumps the patch version.', console),
+    ];
+    final commandRunner =
+        await CommandRunner('pubver', 'Package version manager.')
+          ..addCommand(BumpVersion(bumpers))
+          ..addCommand(SetVersion(console))
+          ..argParser.addOption('pubspec-dir',
+              abbr: 'd',
+              help: 'Directory containing pubspec.yaml.',
+              defaultsTo: '.');
+
+    try {
+      await commandRunner.run(args);
+      return 0;
+    } on UsageException catch (e) {
+      console.error(e.toString());
+      return 64;
+    }
+  }
+}
+
+class Bumper extends UpdateVersion {
+  final String name;
+  final String description;
+
+  Bumper(this.name, this.description, Console c) : super(c);
+
+  Version nextVersion(Version v) => {
+        'breaking': () => v.nextBreaking,
+        'major': () => v.nextMajor,
+        'minor': () => v.nextMinor,
+        'patch': () => v.nextPatch,
+      }[name]();
+}
 
 class Console {
   final Stdout _output;
   final Stdout _error;
 
-  Console([Stdout output, Stdout error])
-      : _output = output ?? stdout,
-        _error = error ?? stderr;
+  Console(this._output, this._error);
+
+  Console.stdio() : this(stdout, stderr);
 
   void error(Object e) => _error.writeln(e);
 
   void log(Object message) => _output.writeln(message);
 }
 
-class Command {
-  final _parser = ArgParser();
-  final Console _console;
-  final NextVersion _nextVersion;
+class BumpVersion<T> extends Command<T> {
+  final name = 'bump';
+  final description = 'Bumps the package version.';
 
-  Command(Console this._console, NextVersion this._nextVersion) {
-    _parser.addOption('pubspec-dir',
-        abbr: 'd',
-        help: 'Directory to look pubspec.yaml in. Default is the current dir.',
-        defaultsTo: '.');
-
-    _parser.addFlag('commit',
-        abbr: 'c',
-        help:
-            'Runs `git commit . -m "Release <version>"` and `git tag <version>`',
-        defaultsTo: false);
+  BumpVersion(List<Command<T>> subcommands) {
+    subcommands.forEach(addSubcommand);
   }
-
-  FutureOr<int> run(List<String> cliArgs) async {
-    try {
-      final args = _parseArgs(cliArgs);
-      final dir = Directory(args['pubspec-dir']);
-      final pubSpec = await PubSpec.load(dir);
-      final nextVersion = _nextVersion(pubSpec.version, args.arguments);
-      await pubSpec.copy(version: nextVersion).save(dir);
-      _console.log(nextVersion.toString());
-      if (args['commit']) {
-        await Process.run('git', [
-          'commit',
-          '.',
-          '-m',
-          'Release ${Version.parse(args.arguments[0]).toString()}'
-        ]);
-        await Process.run(
-            'git', ['tag', Version.parse(args.arguments[0]).toString()]);
-      }
-      return 0;
-    } on Error catch (e) {
-      _console.error(e);
-      return 2;
-    }
-  }
-
-  ArgResults _parseArgs(List<String> cliArgs) => _parser.parse(cliArgs);
 }
 
-typedef Version NextVersion(Version current, List<String> args);
+class SetVersion extends UpdateVersion {
+  final name = 'set';
+  final description = 'Sets the version.';
 
-Version setVersion(Version c, List<String> args) => Version.parse(args[0]);
+  SetVersion(Console c) : super(c);
 
-Version bumpVersion(Version current, List<String> args) {
-  final part = args[0];
-  if (part == 'breaking') return current.nextBreaking;
-  if (part == 'major') return current.nextMajor;
-  if (part == 'minor') return current.nextMinor;
-  if (part == 'patch') return current.nextPatch;
-  throw ArgumentError();
+  Version nextVersion(Version v) {
+    if (globalResults.arguments.length < 2)
+      throw UsageException('Please provide the version', 'Example: set 3.2.1');
+    return Version.parse(globalResults.arguments[1]);
+  }
+}
+
+abstract class UpdateVersion extends Command {
+  final Console console;
+
+  UpdateVersion(this.console);
+
+  Future run() async {
+    final dir = Directory(globalResults['pubspec-dir']);
+    final pubSpec = await PubSpec.load(dir);
+    final version = nextVersion(pubSpec.version);
+    await pubSpec.copy(version: version).save(dir);
+    console.log(version.toString());
+  }
+
+  Version nextVersion(Version v);
 }
