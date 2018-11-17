@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2018-11-16
+### Changed
+- Minor documentation changes.
+
 ## [0.2.0] - 2018-11-16
 ### Breaking change
 - This is now a standalone cli app.
@@ -22,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial version
 
-[Unreleased]: https://github.com/f3ath/pubspec-version/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/f3ath/pubspec-version/compare/0.2.1...HEAD
+[0.2.1]: https://github.com/f3ath/pubspec-version/compare/0.2.0...0.2.1
+[0.2.0]: https://github.com/f3ath/pubspec-version/compare/0.1.0...0.2.0
 [0.1.0]: https://github.com/f3ath/pubspec-version/compare/0.0.2...0.1.0
 [0.0.2]: https://github.com/f3ath/pubspec-version/compare/0.0.1...0.0.2

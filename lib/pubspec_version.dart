@@ -74,7 +74,7 @@ class BumpVersion<T> extends Command<T> {
 
 class SetVersion extends UpdateVersion {
   final name = 'set';
-  final description = 'Sets the version.';
+  final description = 'Sets the package version.';
 
   SetVersion(Console c) : super(c);
 
