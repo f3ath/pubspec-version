@@ -13,11 +13,7 @@ This will add the **pubver** binary to your `~/.pub-cache/bin`.
 ```
 pubver bump <part>
 ``` 
-where `<part>` can be either:
- - `breaking`
- - `major`
- - `minor`
- - `patch`
+where `<part>` can be either **breaking**, **major**, **minor** or **patch**.
 
 #### Examples
 Before | Command | After
