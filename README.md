@@ -22,7 +22,7 @@ Before | Command | After
 0.2.1 | `pubver bump breaking`  | 0.3.0
 0.2.1 | `pubver bump major`     | 1.0.0
 0.2.1 | `pubver bump minor`     | 0.3.0
-0.2.1 | `pubver bump patch`     | 0.2.1
+0.2.1 | `pubver bump patch`     | 0.2.2
 
 ### Setting the version
 ```
