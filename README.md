@@ -30,10 +30,18 @@ pubver set <version>
 ```
 where `<version>` can be any arbitrary version.
 
+### Getting the version
+```
+pubver get
+```
+
 ### Output
 The tool prints the new version to stdout. This allows post processing, e.g. making a git commit.
 ```bash
 git ci . -m "Release $(pubver bump breaking)"
+```
+```
+pubver set "$(pubver get)+1"
 ```
 
 ___

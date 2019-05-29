@@ -64,4 +64,10 @@ void main() {
     expect(verify(mockConsole.error(captureAny)).captured,
         ['Please provide the version\n\nExample: set 3.2.1']);
   });
+
+  test('get', () async {
+    final code = await app.run(['get', '-d', temp.path]);
+    expect(code, 0);
+    await expectVersion('0.3.2');
+  });
 }

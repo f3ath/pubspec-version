@@ -21,6 +21,7 @@ class App {
         await CommandRunner('pubver', 'Package version manager.')
           ..addCommand(BumpVersion(bumpers))
           ..addCommand(SetVersion(console))
+          ..addCommand(GetVersion(console))
           ..argParser.addOption('pubspec-dir',
               abbr: 'd',
               help: 'Directory containing pubspec.yaml.',
@@ -99,4 +100,19 @@ abstract class UpdateVersion extends Command {
   }
 
   Version nextVersion(Version v);
+}
+
+class GetVersion extends Command {
+  final Console console;
+  final name = 'get';
+  final description = 'Gets the current package version.';
+
+  GetVersion(this.console);
+
+  @override
+  Future run() async {
+    final dir = Directory(globalResults['pubspec-dir']);
+    final pubSpec = await PubSpec.load(dir);
+    console.log(pubSpec.version.toString());
+  }
 }
