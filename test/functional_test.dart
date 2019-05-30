@@ -10,7 +10,7 @@ class MockConsole extends Mock implements Console {}
 void main() {
   Directory temp;
   MockConsole mockConsole;
-  App app;
+  Application app;
 
   expectVersion(String v) async {
     expect((await PubSpec.load(Directory(temp.path))).version.toString(), v);
@@ -21,7 +21,7 @@ void main() {
     temp = await Directory.systemTemp.createTemp();
     File('test/pubspec_sample.yaml').copy('${temp.path}/pubspec.yaml');
     mockConsole = MockConsole();
-    app = App(mockConsole);
+    app = Application(mockConsole);
   });
 
   tearDown(() async {
