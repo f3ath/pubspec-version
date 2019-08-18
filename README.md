@@ -28,10 +28,10 @@ Before | Command | After
 0.2.1+42 | `pubver bump build`     | 0.2.1+43
 0.2.1+foo | `pubver bump build`     | 0.2.1+foo.1
 0.2.1+42.foo | `pubver bump build`     | 0.2.1+43.foo
-0.2.1+foo.bar.1.2 | `pubver bump build`     | 0.2.1+foo.bar.2.2
+0.2.1+foo.bar.1.2 | `pubver bump build`     | 0.2.1+foo.bar.2.0
 
 The `bump build` command is a bit tricky. It either increments the first numeric part of the build (if there is a 
-numeric part) or appends `.1` to the build (otherwise).
+numeric part) setting other numeric parts to zeroes, or appends `.1` to the build (otherwise).
 
 ### Setting the version
 ```

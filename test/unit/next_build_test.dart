@@ -15,6 +15,6 @@ void main() {
 
   test('in a complex build the first numeric part gets incremented', () async {
     final v = Version.parse('1.2.3+foo.1.2.3.bar');
-    expect(nextBuild(v).toString(), '1.2.3+foo.2.2.3.bar');
+    expect(nextBuild(v).toString(), '1.2.3+foo.2.0.0.bar');
   });
 }
