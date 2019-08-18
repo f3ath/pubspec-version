@@ -52,10 +52,16 @@ void main() {
     await expectVersion('0.3.3');
   });
 
-  test('set', () async {
-    final code = await app.run(['set', '5.4.321', '-d', temp.path]);
+  test('bump build', () async {
+    final code = await app.run(['bump', 'build', '-d', temp.path]);
     expect(code, 0);
-    await expectVersion('5.4.321');
+    await expectVersion('0.3.2+43');
+  });
+
+  test('set', () async {
+    final code = await app.run(['set', '5.4.321+12', '-d', temp.path]);
+    expect(code, 0);
+    await expectVersion('5.4.321+12');
   });
 
   test('set called without version', () async {
@@ -68,6 +74,6 @@ void main() {
   test('get', () async {
     final code = await app.run(['get', '-d', temp.path]);
     expect(code, 0);
-    await expectVersion('0.3.2');
+    await expectVersion('0.3.2+42');
   });
 }

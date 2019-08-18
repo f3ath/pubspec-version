@@ -6,10 +6,10 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec/pubspec.dart';
 import 'package:pubspec_version/src/console.dart';
 
-abstract class UpdateVersion extends Command {
+abstract class VersionCommand extends Command {
   final Console console;
 
-  UpdateVersion(this.console);
+  VersionCommand(this.console);
 
   Future run() async {
     final dir = Directory(globalResults['pubspec-dir']);

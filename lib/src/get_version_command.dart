@@ -5,12 +5,12 @@ import 'package:args/command_runner.dart';
 import 'package:pubspec/pubspec.dart';
 import 'package:pubspec_version/src/console.dart';
 
-class GetVersion extends Command {
+class GetVersionCommand extends Command {
   final Console console;
   final name = 'get';
   final description = 'Gets the current package version.';
 
-  GetVersion(this.console);
+  GetVersionCommand(this.console);
 
   @override
   Future run() async {

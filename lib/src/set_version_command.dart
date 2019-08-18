@@ -1,13 +1,13 @@
 import 'package:args/command_runner.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:pubspec_version/src/console.dart';
-import 'package:pubspec_version/src/update_version.dart';
+import 'package:pubspec_version/src/version_command.dart';
 
-class SetVersion extends UpdateVersion {
+class SetVersionCommand extends VersionCommand {
   final name = 'set';
   final description = 'Sets the package version.';
 
-  SetVersion(Console c) : super(c);
+  SetVersionCommand(Console c) : super(c);
 
   Version nextVersion(Version v) {
     if (globalResults.arguments.length < 2) {
