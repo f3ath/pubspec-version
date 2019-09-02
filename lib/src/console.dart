@@ -12,8 +12,8 @@ class Console {
   Console.stdio() : this(stdout, stderr);
 
   /// Writes the [message] to the error sink
-  void error(Object message) => _error.writeln(message);
+  void error(Object message) => _error.writeln(message.toString());
 
   /// Writes the [message] the to the normal output sink
-  void log(Object message) => _output.writeln(message);
+  void log(Object message) => _output.writeln(message.toString());
 }

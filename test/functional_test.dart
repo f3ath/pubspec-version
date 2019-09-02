@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:args/command_runner.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pubspec/pubspec.dart';
 import 'package:pubspec_version/pubspec_version.dart';
@@ -10,18 +11,20 @@ class MockConsole extends Mock implements Console {}
 void main() {
   Directory temp;
   MockConsole mockConsole;
-  Application app;
+  CommandRunner<int> app;
 
   expectVersion(String v) async {
     expect((await PubSpec.load(Directory(temp.path))).version.toString(), v);
-    expect(verify(mockConsole.log(captureAny)).captured, [v]);
+    expect(
+        verify(mockConsole.log(captureAny)).captured.map((_) => _.toString()),
+        [v]);
   }
 
   setUp(() async {
     temp = await Directory.systemTemp.createTemp();
     File('test/pubspec_sample.yaml').copy('${temp.path}/pubspec.yaml');
     mockConsole = MockConsole();
-    app = Application(mockConsole);
+    app = buildApp(mockConsole);
   });
 
   tearDown(() async {
@@ -34,10 +37,22 @@ void main() {
     await expectVersion('0.4.0');
   });
 
+  test('bump breaking retaining build', () async {
+    final code = await app.run(['bump', 'breaking', '-d', temp.path, '-b']);
+    expect(code, 0);
+    await expectVersion('0.4.0+42');
+  });
+
   test('bump major', () async {
     final code = await app.run(['bump', 'major', '-d', temp.path]);
     expect(code, 0);
     await expectVersion('1.0.0');
+  });
+
+  test('bump major retaining build', () async {
+    final code = await app.run(['bump', 'major', '-d', temp.path, '-b']);
+    expect(code, 0);
+    await expectVersion('1.0.0+42');
   });
 
   test('bump minor', () async {
@@ -46,10 +61,22 @@ void main() {
     await expectVersion('0.4.0');
   });
 
+  test('bump minor retaining build', () async {
+    final code = await app.run(['bump', 'minor', '-d', temp.path, '-b']);
+    expect(code, 0);
+    await expectVersion('0.4.0+42');
+  });
+
   test('bump patch', () async {
     final code = await app.run(['bump', 'patch', '-d', temp.path]);
     expect(code, 0);
     await expectVersion('0.3.3');
+  });
+
+  test('bump patch retaining build', () async {
+    final code = await app.run(['bump', 'patch', '-d', temp.path, '-b']);
+    expect(code, 0);
+    await expectVersion('0.3.3+42');
   });
 
   test('bump build', () async {
