@@ -22,7 +22,7 @@ void main() {
 
   setUp(() async {
     temp = await Directory.systemTemp.createTemp();
-    File('test/pubspec_sample.yaml').copy('${temp.path}/pubspec.yaml');
+    await File('test/pubspec_sample.yaml').copy('${temp.path}/pubspec.yaml');
     mockConsole = MockConsole();
     app = buildApp(mockConsole);
   });

@@ -33,6 +33,18 @@ Before | Command | After
 The `bump build` command is a bit tricky. It either increments the first numeric part of the build (if there is a 
 numeric part) setting other numeric parts to zeroes, or appends `.1` to the build (otherwise).
 
+### Retaining the build number
+When bumping either **major**, **minor**, or **patch** versions, it is possible to retain the existing build number (if any).
+To do so, pass `--retain-build` (`-b`) flag.
+
+Before | Command | After
+--- | --- | ---
+1.2.3+42 | `pubver bump breaking`       | 2.0.0
+0.2.1+42 | `pubver bump breaking -b`    | 0.3.0+42
+0.2.1+42 | `pubver bump patch`          | 0.2.2
+0.2.1+42 | `pubver bump patch -b`       | 0.2.2+42
+
+
 ### Setting the version
 ```
 pubver set <version>
