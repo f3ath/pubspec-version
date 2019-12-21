@@ -13,7 +13,7 @@ void main() {
   MockConsole mockConsole;
   CommandRunner<int> app;
 
-  expectVersion(String v) async {
+  void expectVersion(String v) async {
     expect((await PubSpec.load(Directory(temp.path))).version.toString(), v);
     expect(
         verify(mockConsole.log(captureAny)).captured.map((_) => _.toString()),

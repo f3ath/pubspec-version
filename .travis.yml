@@ -1,7 +1,7 @@
 language: dart
 dart:
-- stable
+  - stable
 dart_task:
-- test: --platform vm
-- dartfmt: true
-- dartanalyzer: --fatal-infos --fatal-warnings lib test bin
+  - test: --platform vm
+  - dartfmt: true
+  - dartanalyzer: --fatal-infos --fatal-warnings lib test bin

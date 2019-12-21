@@ -2,7 +2,9 @@ import 'package:args/command_runner.dart';
 import 'package:pubspec_version/src/pubspec_version_app.dart';
 
 class PubSpecCommand extends Command<int> {
+  @override
   final String description;
+  @override
   final String name;
   final _Payload _payload;
 
@@ -28,9 +30,10 @@ class PubSpecCommand extends Command<int> {
 
   List<String> get arguments => globalResults.arguments;
 
+  @override
   Future<int> run() => _payload(this);
 
   PubSpecVersionApp get _app => PubSpecVersionApp(globalResults['pubspec-dir']);
 }
 
-typedef Future<int> _Payload(PubSpecCommand command);
+typedef _Payload = Future<int> Function(PubSpecCommand command);

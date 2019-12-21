@@ -36,7 +36,7 @@ class PubSpecVersionApp {
 
   Future<void> bumpBuild() => _update((_) => _.bumpBuild());
 
-  Future<void> _update(VersionTransform mutate(VersionTransform v),
+  Future<void> _update(VersionTransform Function(VersionTransform v) mutate,
       {bool retainBuild = false}) async {
     final version = await readVersion();
     var newVersion =
