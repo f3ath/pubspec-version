@@ -1,4 +1,10 @@
-# pubver
+# The project has moved to [cider](https://pub.dev/packages/cider). This package is archived.
+---
+---
+---
+---
+---
+
 CLI tool to set/bump the `version` key in pubspec.yaml. Semver-compliant (Almost. 
 It uses [pub_semver](https://pub.dartlang.org/packages/pub_semver) which is a bit different.)
 
